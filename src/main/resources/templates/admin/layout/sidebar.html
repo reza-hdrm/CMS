@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<aside th:fragment="sidebar" class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('dashboard.index')}}"><i class="icon-speedometer"></i> داشبورد <span
+                        class="tag tag-info">جدید</span></a>
+            </li>
+
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-people"></i> کاربران</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('users.create')}}"><i class="icon-user-follow"></i> ثبت کاربر</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('users.index')}}"><i class="icon-people"></i> لیست کاربران</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-globe-alt"></i> مطالب</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/post/create}"><i class="icon-plus"></i> مطلب جدید</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/post}"><i class="icon-list"></i> لیست مطالب</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-globe-alt"></i> نظرات</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('comments.index')}}"><i class="icon-speech"></i> لیست
+                            نظرات</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> دسته بندی</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('categories.create')}}"><i class="icon-plus"></i> دسته بندی
+                            جدید</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('categories.index')}}"><i class="icon-list"></i> لیست دسته
+                            بندی ها</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-docs"></i> رسانه ها</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('photos.index')}}"><i class="icon-list"></i>لیست فایل ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('photos.create')}}"><i class="icon-plus"></i> آپلود فایل</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+</body>
+</html>

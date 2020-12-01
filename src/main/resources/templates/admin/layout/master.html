@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="IR-fa" dir="rtl" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/layout/head::head"></head>
+
+<body class="navbar-fixed sidebar-nav fixed-nav">
+
+<header th:replace="admin/layout/header::header"></header>
+<aside th:replace="admin/layout/sidebar::sidebar"></aside>
+
+<!-- Main content -->
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol th:replace="admin/layout/breadcrumb::breadcrumb"></ol>
+
+    <div class="container-fluid bg-content">
+        <div class="animated fadeIn">
+            <div class="row">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+
+    <!--/.container-fluid-->
+</main>
+
+<aside th:replace="admin/layout/aside-menu::aside-menu"></aside>
+<footer th:replace="/admin/layout/footer::footer"></footer>
+
+<script th:src="@{/js/all-admin.js}"></script>
+@yield('scripts')
+
+</body>
+</html>

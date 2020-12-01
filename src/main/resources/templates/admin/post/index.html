@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="IR-fa" dir="rtl" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/layout/head::head"></head>
+
+<body class="navbar-fixed sidebar-nav fixed-nav">
+<header th:replace="admin/layout/header::header"></header>
+<aside th:replace="admin/layout/sidebar::sidebar"></aside>
+<!-- Main content -->
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol th:replace="admin/layout/breadcrumb::breadcrumb"></ol>
+
+    <div class="container-fluid bg-content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div th:if="${session.message!=null}" th:class="${session.message.nameClass}">
+                    <div th:text="${session.message.message}"></div>
+                </div>
+
+                <h3 class="p-b-2">لیست مطالب</h3>
+                <table class="table table-hover bg-content">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>عنوان</th>
+                        <th>کاربر</th>
+                        <th>توضیحات</th>
+                        <th>دسته بندی</th>
+                        <th>وضعیت</th>
+                        <th>تاریخ ایجاد</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td><img th:src="@{${post.photo!=null ? post.photo.path : 'http://www.placehold.it/400' }}"
+                                 class="img-fluid" width="80">
+                        </td>
+                        <td><a th:href="@{/admin/post/edit/{id}(id=${post.id})}" th:text="${post.title}"></a></td>
+                        <!--TODO user Entity-->
+                        <!--<td th:text="${post.user.name}"></td>-->
+                        <td>رضاحیدری مهر</td>
+                        <td th:text="${post.description.substring(0,100)}"></td>
+                        <td th:text="${post.category.title}"></td>
+                        <td th:if="${post.status.toString().equals('DEACTIVATE')}"><span
+                                class="tag tag-pill tag-danger">غیرفعال</span></td>
+                        <td th:if="${post.status.toString().equals('ACTIVATE')}"><span class="tag tag-pill tag-success">فعال</span>
+                        </td>
+                        <td th:text="${persianCalendar.format(post.createdAt)}"><</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--TODO pagination-->
+                <div class="col-md-12" style="text-align: center"></div>
+
+            </div>
+        </div>
+    </div>
+    <!--/.container-fluid-->
+</main>
+
+<aside th:replace="admin/layout/aside-menu::aside-menu"></aside>
+<footer th:replace="/admin/layout/footer::footer"></footer>
+<script th:src="@{/js/all-admin.js}"></script>
+@yield('scripts')
+</body>
+
+</html>

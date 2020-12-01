@@ -1,9 +1,6 @@
 package com.rezahdrm.cms.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.List;
+import javax.persistence.*;
 
 @Entity
 public class Comment extends HistoricalColumn {
@@ -13,7 +10,7 @@ public class Comment extends HistoricalColumn {
     private String description;
     private Status status;
 
-
+    @Column(name = "post_id")
     public Long getPostId() {
         return postId;
     }
@@ -23,7 +20,7 @@ public class Comment extends HistoricalColumn {
     }
 
     @ManyToOne
-    @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(insertable = false, updatable = false)
     public Post getPost() {
         return post;
     }

@@ -1,6 +1,9 @@
 package com.rezahdrm.cms.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Post extends HistoricalColumn {
@@ -14,10 +17,13 @@ public class Post extends HistoricalColumn {
     private Long userId;
     private Long photoId;
     private Long categoryId;
+    private User user;
+    private Photo photo;
+    private Category category;
+    private List<Comment> comments;
 
-    //TODO user photo category model
-
-
+    @NotBlank(message = "عنوان مطلب را وارد نمایید")
+    @Size(min = 5,max = 255,message = "عنوان باید 5 الی 255 کاراکتر باشد")
     public String getTitle() {
         return title;
     }
@@ -58,6 +64,7 @@ public class Post extends HistoricalColumn {
         this.metaKeyword = metaKeyword;
     }
 
+    @Enumerated(value = EnumType.STRING)
     public Status getStatus() {
         return status;
     }
@@ -66,6 +73,7 @@ public class Post extends HistoricalColumn {
         this.status = status;
     }
 
+    @Column(name = "user_id")
     public Long getUserId() {
         return userId;
     }
@@ -74,6 +82,7 @@ public class Post extends HistoricalColumn {
         this.userId = userId;
     }
 
+    @Column(name = "photo_id")
     public Long getPhotoId() {
         return photoId;
     }
@@ -82,6 +91,7 @@ public class Post extends HistoricalColumn {
         this.photoId = photoId;
     }
 
+    @Column(name = "category_id")
     public Long getCategoryId() {
         return categoryId;
     }
@@ -90,7 +100,65 @@ public class Post extends HistoricalColumn {
         this.categoryId = categoryId;
     }
 
-    enum Status {
+    @ManyToOne
+    @JoinColumn(insertable = false, updatable = false)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne
+    @JoinColumn(insertable = false, updatable = false)
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    @ManyToOne
+    @JoinColumn(insertable = false, updatable = false)
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @OneToMany(mappedBy = "post")
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "title='" + title + '\'' +
+                ", slug='" + slug + '\'' +
+                ", description='" + description + '\'' +
+                ", metaDescription='" + metaDescription + '\'' +
+                ", metaKeyword='" + metaKeyword + '\'' +
+                ", status=" + status +
+                /*", userId=" + userId +
+                ", photoId=" + photoId +
+                ", categoryId=" + categoryId +
+                ", user=" + user +
+                ", photo=" + photo +
+                ", category=" + category +
+                ", comments=" + comments +*/
+                '}';
+    }
+
+    public enum Status {
         ACTIVATE, DEACTIVATE
     }
 }

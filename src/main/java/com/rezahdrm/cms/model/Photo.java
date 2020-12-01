@@ -1,6 +1,7 @@
 package com.rezahdrm.cms.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
@@ -8,9 +9,8 @@ import java.util.List;
 @Entity
 public class Photo extends HistoricalColumn {
     private String path;
-    private String name;
-    private User user;
-    private List<Post> posts;
+    //private User user;
+    private Post post;
 
     public String getPath() {
         return path;
@@ -20,29 +20,21 @@ public class Photo extends HistoricalColumn {
         this.path = path;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @OneToOne
+    /*@OneToOne(fetch = FetchType.LAZY)
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }*/
+
+    @OneToOne(mappedBy = "photo")
+    public Post getPost() {
+        return post;
     }
 
-    @OneToMany(mappedBy = "photo")
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

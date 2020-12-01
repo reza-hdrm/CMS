@@ -1,9 +1,6 @@
 package com.rezahdrm.cms.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -51,6 +48,7 @@ public class User extends HistoricalColumn {
         this.password = password;
     }
 
+    @Enumerated(EnumType.STRING)
     public Status getStatus() {
         return status;
     }
@@ -59,6 +57,7 @@ public class User extends HistoricalColumn {
         this.status = status;
     }
 
+    @Column(name = "photo_id")
     public Long getPhotoId() {
         return PhotoId;
     }
@@ -67,8 +66,8 @@ public class User extends HistoricalColumn {
         PhotoId = photoId;
     }
 
-    @OneToOne(mappedBy = "user")
-    @JoinColumn(name = "photo_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(insertable = false, updatable = false)
     public Photo getPhoto() {
         return photo;
     }

@@ -2,65 +2,80 @@ package com.rezahdrm.cms.web.controller;
 
 import com.rezahdrm.cms.model.Post;
 import com.rezahdrm.cms.model.dto.Message;
-import com.rezahdrm.cms.repositroy.PostRepository;
+import com.rezahdrm.cms.serivce.CategoryService;
+import com.rezahdrm.cms.serivce.PhotoService;
 import com.rezahdrm.cms.serivce.PostService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("admin/post")
+@SessionAttributes("message")
 public class PostController {
     PostService postService;
+    CategoryService categoryService;
+    PhotoService photoService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, CategoryService categoryService, PhotoService photoService) {
         this.postService = postService;
+        this.categoryService = categoryService;
+        this.photoService = photoService;
     }
 
     @GetMapping
     public String index(ModelMap modelMap) {
         modelMap.addAttribute("posts", postService.findAll());
-        return "/post/index";
+        return "admin/post/index";
     }
 
-    @GetMapping("create")
+    @GetMapping(value = "create", name = "post.create")
     public String create(ModelMap modelMap) {
-        //TODO sent category model
-        return "/post/create";
+        modelMap.addAttribute("categories", categoryService.findAll()).addAttribute("post", new Post());
+        return "admin/post/create";
     }
 
     @PostMapping("/store")
-    public String store(@ModelAttribute @Valid Post post, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String store(@ModelAttribute @Valid Post post, BindingResult bindingResult, @ModelAttribute("photoFile") MultipartFile photoFile, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors())
-            return "/post/create";
-        postService.save(post);
-        redirectAttributes.addFlashAttribute("message", new Message("مطلب جدید با موفقیت اضافه شد", "add_post"));
+            return "redirect:/admin/post/create";
+        postService.save(post,photoFile);
+        redirectAttributes.addFlashAttribute("message", new Message("مطلب جدید با موفقیت اضافه شد", "alert alert-success"));
         return "redirect:/admin/post";
     }
 
     @GetMapping("edit/{id:\\d+}")
     public String edit(@PathVariable Long id, ModelMap modelMap) {
-        modelMap.addAttribute(postService.findById(id));
-        return "/post/edit";
+        modelMap.addAttribute("post", postService.findById(id));
+        return "admin/post/edit";
     }
 
-    @PostMapping("update")
+    @PostMapping(value = "update")
     public String update(@Valid @ModelAttribute Post post, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors())
-            return "/post/edit";
-        postService.save(post);
-        redirectAttributes.addFlashAttribute("message", new Message("مطلب جدید با موفقیت ویرایش شد", "update_post"));
+            return "admin/post/edit";
+        //postService.save(post);
+        redirectAttributes.addFlashAttribute("message", new Message("مطلب جدید با موفقیت ویرایش شد", "alert alert-success"));
         return "redirect:/admin/post";
     }
 
     @GetMapping("delete/{id:\\d+}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         postService.delete(id);
-        redirectAttributes.addFlashAttribute("message", new Message("مطلب با موفقیت حذف شد", "delete_post"));
+        redirectAttributes.addFlashAttribute("message", new Message("مطلب با موفقیت حذف شد", "alert alert-danger"));
         return "redirect:/admin/post";
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public StackTraceElement[] showException(Exception e) {
+        return e.getStackTrace();
     }
 }

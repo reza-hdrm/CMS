@@ -2,7 +2,6 @@ package com.rezahdrm.cms.serivce;
 
 import com.rezahdrm.cms.model.Post;
 import com.rezahdrm.cms.repositroy.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,8 +11,8 @@ import java.util.List;
 
 @Service
 public class PostService {
-    PostRepository postRepository;
-    PhotoService photoService;
+    private final PostRepository postRepository;
+    private final PhotoService photoService;
 
     public PostService(PostRepository postRepository, PhotoService photoService) {
         this.postRepository = postRepository;

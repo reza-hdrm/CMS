@@ -5,8 +5,8 @@ import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.util.PersianCalendar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Locale;
 
@@ -14,12 +14,13 @@ import java.util.Locale;
 public class ApplicationConfiguration {
 
     @Bean
-    @Lazy
+    @Scope(WebApplicationContext.SCOPE_APPLICATION)
     public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("yyyyMMdd_HHmmss");
     }
 
     @Bean
+    @Scope(WebApplicationContext.SCOPE_APPLICATION)
     public DateFormat persianCalendar() {
         return new PersianCalendar().getDateTimeFormat(1, 2, new Locale("fa", "IR"));
     }

@@ -14,16 +14,16 @@ import java.util.Random;
 
 @Service
 public class PhotoService {
-    PhotoRepository photoRepository;
-    @Autowired
-    SimpleDateFormat simpleDateFormat;
+    private final PhotoRepository photoRepository;
+    private final SimpleDateFormat simpleDateFormat;
 
-    public PhotoService(PhotoRepository photoRepository) {
+    public PhotoService(PhotoRepository photoRepository, SimpleDateFormat simpleDateFormat) {
         this.photoRepository = photoRepository;
+        this.simpleDateFormat = simpleDateFormat;
     }
 
     public Long save(MultipartFile photoFile) {
-        Photo photo=new Photo();
+        Photo photo = new Photo();
         String path = savePhotoFile(photoFile);
         photo.setPath(path);
         return photoRepository.save(photo).getId();
@@ -50,7 +50,7 @@ public class PhotoService {
     }
 
     public void setDeletedAt(Long photoId, Date DeletedAt) {
-        photoRepository.setDeletedAt(photoId,DeletedAt);
+        photoRepository.setDeletedAt(photoId, DeletedAt);
     }
 }
 

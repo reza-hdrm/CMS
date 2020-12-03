@@ -50,11 +50,11 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> دسته بندی</a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('categories.create')}}"><i class="icon-plus"></i> دسته بندی
+                        <a class="nav-link" th:href="@{/admin/category/create}"><i class="icon-plus"></i> دسته بندی
                             جدید</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('categories.index')}}"><i class="icon-list"></i> لیست دسته
+                        <a class="nav-link" th:href="@{/admin/category}"><i class="icon-list"></i> لیست دسته
                             بندی ها</a>
                     </li>
                 </ul>

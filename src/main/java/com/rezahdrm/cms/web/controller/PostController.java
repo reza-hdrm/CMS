@@ -16,29 +16,30 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 @RequestMapping("admin/post")
 /*@SessionAttributes("message")*/
 public class PostController {
-    PostService postService;
-    CategoryService categoryService;
-    PhotoService photoService;
-    @Autowired
-    DateFormat persianCalendar;
+    private final PostService postService;
+    private final CategoryService categoryService;
+    private final PhotoService photoService;
+    private final DateFormat persianCalendar;
 
-    public PostController(PostService postService, CategoryService categoryService, PhotoService photoService) {
+    public PostController(PostService postService, CategoryService categoryService, PhotoService photoService, DateFormat persianCalendar) {
         this.postService = postService;
         this.categoryService = categoryService;
         this.photoService = photoService;
+        this.persianCalendar = persianCalendar;
     }
 
     @GetMapping
-    public String index(ModelMap modelMap,@ModelAttribute Message message) {
+    public String index(ModelMap modelMap, Message message) {
         modelMap.
                 addAttribute("posts", postService.findAll()).
                 addAttribute("persianCalendar", persianCalendar).
-                addAttribute("message",message);
+                addAttribute("message", message);
         return "admin/post/index";
     }
 
@@ -70,6 +71,7 @@ public class PostController {
             @Valid @ModelAttribute Post post, BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             MultipartFile photoFile) {
+
         if (bindingResult.hasErrors())
             return "admin/post/edit";
 
@@ -77,14 +79,19 @@ public class PostController {
 
         redirectAttributes.addFlashAttribute(
                 "message",
-                new Message("مطلب جدید با موفقیت ویرایش شد", "alert alert-success"));
+                new Message("مطلب با موفقیت ویرایش شد", "alert alert-success"));
         return "redirect:/admin/post";
     }
 
-    @GetMapping("delete/{id:\\d+}")
+    @PostMapping("delete/{id:\\d+}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+
+        photoService.setDeletedAt(postService.findById(id).getPhotoId(), new Date());
         postService.delete(id);
-        redirectAttributes.addFlashAttribute("message", new Message("مطلب با موفقیت حذف شد", "alert alert-danger"));
+
+        redirectAttributes.addFlashAttribute(
+                "message",
+                new Message("مطلب با موفقیت حذف شد", "alert alert-danger"));
         return "redirect:/admin/post";
     }
 

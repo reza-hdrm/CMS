@@ -1,87 +1,59 @@
-<!DOCTYPE html>
-<html lang="IR-fa" dir="rtl" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="admin/layout/head::head"></head>
-
-<body class="navbar-fixed sidebar-nav fixed-nav">
-
-<header th:replace="admin/layout/header::header"></header>
-<aside th:replace="admin/layout/sidebar::sidebar"></aside>
-
-<!-- Main content -->
-<main class="main">
-
-    <!-- Breadcrumb -->
-    <ol th:replace="admin/layout/breadcrumb::breadcrumb"></ol>
-
-    <div class="container-fluid bg-content">
-        <div class="animated fadeIn">
-            <div class="row">
-
-
-                <h3 class="p-b-2 text-center">ایجاد مطلب جدید</h3>
-
-                <div class="row">
-                    <div class="col-md-10 offset-md-1">
-                        <form th:object="${post}" method="POST" th:action="@{/admin/post/store}" accept-charset="UTF-8" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="title">عنوان:</label>
-                                <input class="form-control" th:field="*{title}" type="text" id="title" required autofocus>
-                                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
-                            </div>
-                            <div class="form-group">
-                                <label for="slug">نام مستعار:</label>
-                                <input class="form-control" name="slug" type="text" id="slug">
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryId">دسته بندی:</label>
-                                <select class="form-control" id="categoryId" name="categoryId">
-                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">توضیحات:</label>
-                                <textarea class="form-control" name="description" cols="50" rows="10" id="description"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="status">وضعیت:</label>
-                                <select class="form-control" id="status" name="status">
-                                    <option value="ACTIVATE">فعال</option>
-                                    <option value="DEACTIVATE" selected="selected">غیرفعال</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="photoFile">تصویر اصلی:</label>
-                                <input name="photoFile" type="file" id="photoFile">
-                            </div>
-                            <div class="form-group">
-                                <label for="metaDescription">متا توضیحات:</label>
-                                <textarea class="form-control" name="metaDescription" cols="50" rows="10" id="metaDescription"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="metaKeyword">متا برچسب ها:</label>
-                                <textarea class="form-control" name="metaKeyword" cols="50" rows="10" id="metaKeyword"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-success" type="submit" value="ذخیره">
-                            </div>
-                        </form>
+<p th:replace="~{admin/layout/master::layout(~{::content},~{::title})}" xmlns:th="http://www.thymeleaf.org">
+    <title>ایجاد مطلب جدید</title>
+    <content>
+        <h3 class="p-b-2 text-center">ایجاد مطلب جدید</h3>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form th:object="${post}" method="POST" th:action="@{/admin/post/store}" accept-charset="UTF-8"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">عنوان:</label>
+                        <input class="form-control" th:field="*{title}" type="text" id="title" required autofocus>
                     </div>
-
-                </div>
-
-
-
+                    <div class="form-group">
+                        <label for="slug">نام مستعار:</label>
+                        <input class="form-control" name="slug" type="text" id="slug">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">دسته بندی:</label>
+                        <select class="form-control" id="categoryId" name="categoryId">
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                    th:text="${category.title}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">توضیحات:</label>
+                        <textarea class="form-control" name="description" cols="50" rows="10"
+                                  id="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">وضعیت:</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="ACTIVATE">فعال</option>
+                            <option value="DEACTIVATE" selected="selected">غیرفعال</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="photoFile">تصویر اصلی:</label>
+                        <input name="photoFile" type="file" id="photoFile">
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescription">متا توضیحات:</label>
+                        <textarea class="form-control" name="metaDescription" cols="50" rows="10"
+                                  id="metaDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="metaKeyword">متا برچسب ها:</label>
+                        <textarea class="form-control" name="metaKeyword" cols="50" rows="10"
+                                  id="metaKeyword"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" value="ذخیره">
+                    </div>
+                </form>
             </div>
+
         </div>
-    </div>
+    </content>
+</p>
 
-    <!--/.container-fluid-->
-</main>
-
-<aside th:replace="admin/layout/aside-menu::aside-menu"></aside>
-<footer th:replace="/admin/layout/footer::footer"></footer>
-
-<script th:src="@{/js/all-admin.js}"></script>
-
-</body>
-</html>

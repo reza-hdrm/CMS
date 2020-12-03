@@ -1,69 +1,41 @@
-<!DOCTYPE html>
-<html lang="IR-fa" dir="rtl" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="admin/layout/head::head"></head>
-
-<body class="navbar-fixed sidebar-nav fixed-nav">
-
-<header th:replace="admin/layout/header::header"></header>
-<aside th:replace="admin/layout/sidebar::sidebar"></aside>
-
-<!-- Main content -->
-<main class="main">
-
-    <!-- Breadcrumb -->
-    <ol th:replace="admin/layout/breadcrumb::breadcrumb"></ol>
-
-    <div class="container-fluid bg-content">
-        <div class="animated fadeIn">
-            <div class="row">
-
-                <h3 class="p-b-2 text-center">ایجاد دسته بندی جدید</h3>
-
-                <div class="row">
-                    <div class="col-md-6 offset-md-3">
-                        <form  th:object="${category}" method="POST" th:action="@{/admin/category/update}" accept-charset="UTF-8">
-                            <input type="hidden" th:value="${category.id}" name="id">
-                            <div class="form-group">
-                                <label for="title">عنوان:</label>
-                                <input class="form-control" name="title" type="text" id="title" th:value="${category.title}">
-                            </div>
-                            <div class="form-group">
-                                <label for="slug">نام مستعار:</label>
-                                <input class="form-control" name="slug" type="text" id="slug" th:value="${category.slug}">
-                            </div>
-                            <div class="form-group">
-                                <label for="metaDescription">متا توضیحات:</label>
-                                <textarea class="form-control" name="metaDescription" cols="50" rows="10" id="metaDescription" th:text="${category.metaDescription}"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="metaKeyword">متا برچسب ها:</label>
-                                <textarea class="form-control" name="metaKeyword" cols="50" rows="10" id="metaKeyword" th:text="${category.metaKeyword}"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-success col-md-3" type="submit" value="بروزرسانی">
-                            </div>
-                        </form>
-                        <form method="POST" th:action="@{/admin/category/delete/{id}(id=${category.id})}" accept-charset="UTF-8">
-                            <div class="form-group">
-                                <input class="btn btn-danger col-md-3" type="submit" value="حذف">
-                            </div>
-                        </form>
+<p th:replace="~{admin/layout/master::layout(~{::content},~{::title})}" xmlns:th="http://www.thymeleaf.org">
+    <title>ویرایش دسته بندی</title>
+    <content>
+        <h3 class="p-b-2 text-center">ایجاد دسته بندی جدید</h3>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form th:object="${category}" method="POST" th:action="@{/admin/category/update}"
+                      accept-charset="UTF-8">
+                    <input type="hidden" th:value="${category.id}" name="id">
+                    <div class="form-group">
+                        <label for="title">عنوان:</label>
+                        <input class="form-control" name="title" type="text" id="title" th:value="${category.title}">
                     </div>
-
-                </div>
-
+                    <div class="form-group">
+                        <label for="slug">نام مستعار:</label>
+                        <input class="form-control" name="slug" type="text" id="slug" th:value="${category.slug}">
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescription">متا توضیحات:</label>
+                        <textarea class="form-control" name="metaDescription" cols="50" rows="10" id="metaDescription"
+                                  th:text="${category.metaDescription}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="metaKeyword">متا برچسب ها:</label>
+                        <textarea class="form-control" name="metaKeyword" cols="50" rows="10" id="metaKeyword"
+                                  th:text="${category.metaKeyword}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-success col-md-3" type="submit" value="بروزرسانی">
+                    </div>
+                </form>
+                <form method="POST" th:action="@{/admin/category/delete/{id}(id=${category.id})}"
+                      accept-charset="UTF-8">
+                    <div class="form-group">
+                        <input class="btn btn-danger col-md-3" type="submit" value="حذف">
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-
-    <!--/.container-fluid-->
-</main>
-
-<aside th:replace="admin/layout/aside-menu::aside-menu"></aside>
-<footer th:replace="/admin/layout/footer::footer"></footer>
-
-<script th:src="@{/js/all-admin.js}"></script>
-
-</body>
-</html>
+    </content>
+</p>

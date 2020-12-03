@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="IR-fa" dir="rtl" xmlns:th="http://www.thymeleaf.org">
+<html lang="IR-fa" dir="rtl" th:fragment="layout(content,title)" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="admin/layout/head::head"></head>
 
@@ -16,14 +16,11 @@
 
     <div class="container-fluid bg-content">
         <div class="animated fadeIn">
-            <div class="row">
-
-                @yield('content')
+            <div class="row" th:include="${content}">
 
             </div>
         </div>
     </div>
-
     <!--/.container-fluid-->
 </main>
 
@@ -31,7 +28,6 @@
 <footer th:replace="/admin/layout/footer::footer"></footer>
 
 <script th:src="@{/js/all-admin.js}"></script>
-@yield('scripts')
 
 </body>
 </html>

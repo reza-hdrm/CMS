@@ -4,7 +4,6 @@ import com.ibm.icu.text.DateFormat;
 import com.rezahdrm.cms.model.Category;
 import com.rezahdrm.cms.model.dto.Message;
 import com.rezahdrm.cms.serivce.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,15 +28,13 @@ public class CategoryController {
 
         modelMap.addAttribute("categories", categoryService.findAll()).
                 addAttribute("message", message).
-                addAttribute("persianCalender", persianCalendar).
-                addAttribute("title", "لیست دسته بندی ها");
+                addAttribute("persianCalender", persianCalendar);
 
         return "admin/category/index";
     }
 
     @GetMapping("create")
-    public String create(ModelMap modelMap) {
-        modelMap.addAttribute("title", "ایجاد دسته بندی جدید");
+    public String create() {
         return "admin/category/create";
     }
 
@@ -88,5 +85,4 @@ public class CategoryController {
     public StackTraceElement[] showException(Exception e) {
         return e.getStackTrace();
     }
-
 }

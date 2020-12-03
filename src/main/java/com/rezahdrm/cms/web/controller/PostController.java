@@ -62,7 +62,12 @@ public class PostController {
 
     @GetMapping("edit/{id:\\d+}")
     public String edit(@PathVariable Long id, ModelMap modelMap) {
-        modelMap.addAttribute("post", postService.findById(id));
+
+        modelMap.
+
+                addAttribute("post", postService.findById(id)).
+                addAttribute("categories",categoryService.findAll());
+
         return "admin/post/edit";
     }
 
@@ -100,5 +105,10 @@ public class PostController {
     @ResponseBody
     public StackTraceElement[] showException(Exception e) {
         return e.getStackTrace();
+    }
+
+    @GetMapping("test")
+    public String test(){
+        return "admin/layout/master";
     }
 }

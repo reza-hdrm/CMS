@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<header th:fragment="header" class="navbar">
+<header xmlns:th="http://www.thymeleaf.org" th:fragment="header" class="navbar">
     <div class="container-fluid">
         <button class="navbar-toggler mobile-toggler hidden-lg-up" type="button">&#9776;</button>
         <a class="navbar-brand" href="{{route('frontend.root')}}"><p>cmsLaravel.com</p></a>
@@ -49,6 +42,3 @@
         </ul>
     </div>
 </header>
-
-</body>
-</html>

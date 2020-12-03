@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
+<head xmlns:th="http://www.thymeleaf.org" th:fragment="head">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,13 +6,8 @@
     <meta name="author" content="Reza Heydari Mehr">
     <meta name="keyword" content="Bootstrap Data">
     <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
-    <title th:text="${title}"></title>
+    <title th:replace="${title}"></title>
     <!-- Icons -->
     <link th:href="@{/css/all-admin.css}" rel="stylesheet">
     <script th:src="@{/js/tether.min.js}"></script>
 </head>
-<body>
-
-
-</body>
-</html>

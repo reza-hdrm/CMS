@@ -16,8 +16,8 @@
         <div class="animated fadeIn">
             <div class="row">
 
-                <div th:if="${session.message!=null}" th:class="${session.message.nameClass}">
-                    <div th:text="${session.message.message}"></div>
+                <div th:if="${message!=null}" th:class="${message.nameClass}">
+                    <div th:text="${message.message}"></div>
                 </div>
 
                 <h3 class="p-b-2">لیست مطالب</h3>
@@ -53,7 +53,7 @@
                     </tbody>
                 </table>
                 <!--TODO pagination-->
-                <div class="col-md-12" style="text-align: center"></div>
+
 
             </div>
         </div>
@@ -64,7 +64,7 @@
 <aside th:replace="admin/layout/aside-menu::aside-menu"></aside>
 <footer th:replace="/admin/layout/footer::footer"></footer>
 <script th:src="@{/js/all-admin.js}"></script>
-@yield('scripts')
+
 </body>
 
 </html>

@@ -29,6 +29,7 @@
                         <form th:object="${post}" method="POST" th:action="@{/admin/post/update}" accept-charset="UTF-8"
                               enctype="multipart/form-data">
                             <input type="hidden" th:value="${post.id}" name="id">
+                            <input type="hidden" th:value="${post.photoId}" name="photoId">
                             <div class="form-group">
                                 <label for="title">عنوان:</label>
                                 <input class="form-control" name="title" type="text"

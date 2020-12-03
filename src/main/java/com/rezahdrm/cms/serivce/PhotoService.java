@@ -48,5 +48,9 @@ public class PhotoService {
         }
         return destFile.getAbsolutePath();
     }
+
+    public void setDeletedAt(Long photoId, Date DeletedAt) {
+        photoRepository.setDeletedAt(photoId,DeletedAt);
+    }
 }
 

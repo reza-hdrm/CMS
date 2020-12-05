@@ -1,12 +1,10 @@
-package com.rezahdrm.cms.web.controller;
+package com.rezahdrm.cms.web.controller.admin;
 
 import com.ibm.icu.text.DateFormat;
 import com.rezahdrm.cms.model.Post;
 import com.rezahdrm.cms.model.dto.Message;
-import com.rezahdrm.cms.serivce.CategoryService;
-import com.rezahdrm.cms.serivce.PhotoService;
-import com.rezahdrm.cms.serivce.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rezahdrm.cms.service.CategoryService;
+import com.rezahdrm.cms.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Date;
 
 @Controller
 @RequestMapping("admin/post")
@@ -24,13 +21,14 @@ import java.util.Date;
 public class PostController {
     private final PostService postService;
     private final CategoryService categoryService;
-    private final PhotoService photoService;
     private final DateFormat persianCalendar;
 
-    public PostController(PostService postService, CategoryService categoryService, PhotoService photoService, DateFormat persianCalendar) {
+    public PostController(
+            PostService postService,
+            CategoryService categoryService,
+            DateFormat persianCalendar) {
         this.postService = postService;
         this.categoryService = categoryService;
-        this.photoService = photoService;
         this.persianCalendar = persianCalendar;
     }
 
@@ -45,16 +43,20 @@ public class PostController {
 
     @GetMapping(value = "create", name = "post.create")
     public String create(ModelMap modelMap) {
-        modelMap.addAttribute("categories", categoryService.findAll()).
-                addAttribute("post", new Post()).
+        modelMap.addAttribute("post", new Post()).
                 addAttribute("categories", categoryService.findAll());
         return "admin/post/create";
     }
 
     @PostMapping("/store")
-    public String store(@ModelAttribute @Valid Post post, BindingResult bindingResult, @ModelAttribute("photoFile") MultipartFile photoFile, RedirectAttributes redirectAttributes) {
+    public String store(
+            @ModelAttribute @Valid Post post, BindingResult bindingResult,
+            @ModelAttribute("photoFile") MultipartFile photoFile,
+            RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors())
             return "redirect:/admin/post/create";
+
         postService.save(post, photoFile);
         redirectAttributes.addFlashAttribute("message", new Message("مطلب جدید با موفقیت اضافه شد", "alert alert-success"));
         return "redirect:/admin/post";
@@ -63,10 +65,8 @@ public class PostController {
     @GetMapping("edit/{id:\\d+}")
     public String edit(@PathVariable Long id, ModelMap modelMap) {
 
-        modelMap.
-
-                addAttribute("post", postService.findById(id)).
-                addAttribute("categories",categoryService.findAll());
+        modelMap.addAttribute("post", postService.findById(id)).
+                addAttribute("categories", categoryService.findAll());
 
         return "admin/post/edit";
     }
@@ -91,8 +91,7 @@ public class PostController {
     @PostMapping("delete/{id:\\d+}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        photoService.setDeletedAt(postService.findById(id).getPhotoId(), new Date());
-        postService.delete(id);
+        postService.softDelete(id);
 
         redirectAttributes.addFlashAttribute(
                 "message",
@@ -105,10 +104,5 @@ public class PostController {
     @ResponseBody
     public StackTraceElement[] showException(Exception e) {
         return e.getStackTrace();
-    }
-
-    @GetMapping("test")
-    public String test(){
-        return "admin/layout/master";
     }
 }

@@ -1,10 +1,11 @@
-package com.rezahdrm.cms.serivce;
+package com.rezahdrm.cms.service;
 
 import com.rezahdrm.cms.model.Category;
-import com.rezahdrm.cms.repositroy.CategoryRepository;
+import com.rezahdrm.cms.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,17 +16,15 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-
-    public List<Category> categoryForCreatePost(){
+    public List<Category> categoryForCreatePost() {
         return categoryRepository.findALLCreatePost();
     }
 
-
-    public List<Category> findAll(){
+    public List<Category> findAll() {
         return categoryRepository.findAll();
     }
 
-    public void save(Category category){
+    public void save(Category category) {
         categoryRepository.save(category);
     }
 
@@ -33,7 +32,15 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(EntityExistsException::new);
     }
 
-    public void delete(Long id) {
+    public void softDelete(Long id) {
+        categoryRepository.setDeletedAt(id, new Date());
+    }
+
+    public void restrictDelete(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    public void restore(Long id) {
+        categoryRepository.setNullDeletedAt(id);
     }
 }

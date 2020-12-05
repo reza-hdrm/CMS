@@ -1,7 +1,7 @@
-package com.rezahdrm.cms.serivce;
+package com.rezahdrm.cms.service;
 
 import com.rezahdrm.cms.model.Post;
-import com.rezahdrm.cms.repositroy.PostRepository;
+import com.rezahdrm.cms.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +21,7 @@ public class PostService {
     }
 
     public List<Post> findAll() {
-        return postRepository.findAll();
+        return postRepository.findAllByDeletedAtIsNull();
     }
 
 
@@ -30,8 +30,8 @@ public class PostService {
             if (photoFile.isEmpty()) {
                 postRepository.save(post);
                 return;
-            }else
-                photoService.setDeletedAt(post.getPhotoId(),new Date());
+            } else
+                photoService.softDelete(post.getPhotoId());
         }
         Long photoId = photoService.save(photoFile);
         post.setPhotoId(photoId);
@@ -42,8 +42,18 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(EntityExistsException::new);
     }
 
-    public void delete(Long id) {
-        //TODO Delete photo
+    public void softDelete(Long id) {
+        photoService.softDelete(this.findById(id).getPhotoId());
+        postRepository.setDeletedAt(id, new Date());
+    }
+
+    public void restrictDelete(Long id) {
         postRepository.deleteById(id);
     }
+
+    public void restore(Long id) {
+        postRepository.setNullDeletedAt(id);
+    }
+
+
 }

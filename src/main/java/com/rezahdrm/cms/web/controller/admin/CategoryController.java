@@ -1,9 +1,9 @@
-package com.rezahdrm.cms.web.controller;
+package com.rezahdrm.cms.web.controller.admin;
 
 import com.ibm.icu.text.DateFormat;
 import com.rezahdrm.cms.model.Category;
 import com.rezahdrm.cms.model.dto.Message;
-import com.rezahdrm.cms.serivce.CategoryService;
+import com.rezahdrm.cms.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -69,9 +69,9 @@ public class CategoryController {
     }
 
     @PostMapping("delete/{id:\\d+}")
-    public String delete(@PathVariable Long id,RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        categoryService.delete(id);
+        categoryService.softDelete(id);
 
         redirectAttributes.addFlashAttribute(
                 "message",

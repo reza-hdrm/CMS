@@ -17,13 +17,13 @@
                 <img src="http://webamooz.test/img/weblogo.png" alt="">
             </a>
             <div class="form-content form-account">
-                <input id="email" type="text" class="txt-l txt " name="email"
+                <input id="email" type="email" class="txt-l txt " name="username"
                        placeholder="ایمیل یا شماره موبایل" value="" required autocomplete="email" autofocus>
-                <p th:each="error : ${#fields.errors()}"
+                <p th:each="error : ${#fields.allErrors()}"
                    th:text="${error}"></p>
                 <input id="password" type="password" class="txt-l txt" placeholder="رمز عبور"
                        name="password" required autocomplete="current-password">
-                <p th:each="error : ${#fields.errors()}"
+                <p th:each="error : ${#fields.allErrors()}"
                    th:text="${error}"></p>
                 <br>
                 <button type="submit" class="btn btn--login">ورود</button>
@@ -34,11 +34,11 @@
                     <span class="checkmark"></span>
                 </label>
                 <div class="recover-password">
-                    <a th:href="@{password/reset}">بازیابی رمز عبور</a>
+                    <a th:href="@{/password/reset}">بازیابی رمز عبور</a>
                 </div>
             </div>
             <div class="form-footer">
-                <a href="http://webamooz.test/register">صفحه ثبت نام</a>
+                <a th:href="@{/register}">صفحه ثبت نام</a>
             </div>
         </form>
     </div>

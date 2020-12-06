@@ -15,7 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfiguration(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,15 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         -> {
                     request.getSession(false).setAttribute("currentUser",
                             authentication.getPrincipal());
-                    response.sendRedirect("/product/top_product");
+                    response.sendRedirect("/admin/category");
                 }).
                 and().logout().permitAll().
                 and().exceptionHandling().accessDeniedPage("/403");
-    }
-
-    @Autowired
-    public SecurityConfiguration(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
     }
 
     @Autowired

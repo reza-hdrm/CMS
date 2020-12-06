@@ -3,7 +3,6 @@ package com.rezahdrm.cms.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class User extends HistoricalColumn {
@@ -16,8 +15,8 @@ public class User extends HistoricalColumn {
     private Photo photo;
     private String rememberToken;
     private List<Post> posts;
-
-    private Set<Role> roles;
+    private List<Long> rolesId;
+    private List<Role> roles;
 
     public String getName() {
         return name;
@@ -51,7 +50,7 @@ public class User extends HistoricalColumn {
         this.password = password;
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     public Status getStatus() {
         return status;
     }
@@ -99,12 +98,22 @@ public class User extends HistoricalColumn {
     enum Status {
         ACTIVATE, DEACTIVATE, BLOCK
     }
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "users")
-    public Set<Role> getRoles() {
+
+    @ManyToMany(mappedBy = "usersId", targetEntity = Role.class)
+    public List<Long> getRolesId() {
+        return rolesId;
+    }
+
+    public void setRolesId(List<Long> rolesId) {
+        this.rolesId = rolesId;
+    }
+
+    @ManyToMany(mappedBy = "users")
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

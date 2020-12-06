@@ -1,0 +1,42 @@
+<p th:replace="~{admin/layout/master::layout(~{::content},~{::title})}" xmlns:th="http://www.thymeleaf.org">
+    <title>لیست کاربران</title>
+    <content>
+        <div th:replace="admin/layout/message::message"></div>
+        <h3 class="p-b-2">لیست مطالب</h3>
+        <table class="table table-hover bg-content">
+            <thead>
+            <tr>
+                <th></th>
+                <th>نام</th>
+                <th>ایمیل</th>
+                <th>نقش</th>
+                <th>وضعیت</th>
+                <th>تاریخ ایجاد</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <!--TODO user image-->
+                <td><img th:src="@{/user}"
+                         class="img-fluid"
+                         width="80"></td>
+                <td><a th:href="@{/admin/edit/{id}(id=${user.id})}" th:text="${user.name}"></a></td>
+                <td th:text="${user.email}"></td>
+                <td>
+                    <ul style="list-style: none;">
+                        <li th:each="role :${user.getRoles()}" th:text="${role.name}"></li>
+                    </ul>
+                </td>
+                <td th:if="${user.status.toString().equals('DEACTIVATE')}"><span
+                        class="tag tag-pill tag-danger">غیرفعال</span></td>
+                <td th:if="${user.status.toString().equals('ACTIVATE')}"><span
+                        class="tag tag-pill tag-success">فعال</span>
+                <td th:text="${persianCalendar.format(user.createdAt)}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-md-12"
+             style="text-align: center"></div>
+        <!--TODO pagination-->
+    </content>
+</p>

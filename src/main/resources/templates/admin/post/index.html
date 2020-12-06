@@ -21,9 +21,7 @@
                          class="img-fluid" width="80">
                 </td>
                 <td><a th:href="@{/admin/post/edit/{id}(id=${post.id})}" th:text="${post.title}"></a></td>
-                <!--TODO user Entity-->
-                <!--<td th:text="${post.user.name}"></td>-->
-                <td>رضاحیدری مهر</td>
+                <td th:text="${post.user.name}"></td>
                 <td th:text="${post.description.substring(0,60)}"></td>
                 <td th:text="${post.category.title}"></td>
                 <td th:if="${post.status.toString().equals('DEACTIVATE')}"><span

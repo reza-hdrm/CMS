@@ -1,5 +1,6 @@
 package com.rezahdrm.cms.config;
 
+import com.rezahdrm.cms.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests().
                 antMatchers("/static/**/*").permitAll().
                 antMatchers("/admin/**").authenticated().
-                and().formLogin().loginPage("/login").permitAll().
+                and().formLogin().loginPage("/login").usernameParameter("email").permitAll().
                 successHandler((request, response, authentication)
                         -> {
                     request.getSession(false).setAttribute("currentUser",

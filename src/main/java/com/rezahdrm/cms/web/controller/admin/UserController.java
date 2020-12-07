@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("admin/user")
-@Secured("ROLE_ADMIN")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserController {
     private final UserService userService;
     private final DateFormat persianCalendar;

@@ -6,9 +6,9 @@ import com.rezahdrm.cms.model.dto.UserDTO;
 import com.rezahdrm.cms.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService {
@@ -21,7 +21,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User registerNewUserAccount(UserDTO userDTO) throws UserAlreadyExistException {
+    public User registerNewUserAccount(UserDTO userDTO) throws Exception {
 
         if (emailExist(userDTO.getEmail())) {
             throw new UserAlreadyExistException(
@@ -31,6 +31,10 @@ public class UserService implements IUserService {
         User user = new User();
         user.setName(userDTO.getFullName());
         user.setEmail(userDTO.getEmail());
+        user.setRememberToken(UUID.randomUUID().toString());
+        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+            throw new Exception("confirm password isn't mache");//TODO Exception Monaseb
+        }
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         return userRepository.save(user);
     }
@@ -39,8 +43,20 @@ public class UserService implements IUserService {
         return userRepository.findByEmail(email) != null;
     }
 
-    @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAllByDeletedAtIsNull();
+    }
+
+    public void registrationConfirm(String email, String token) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Timestamp(calendar.getTime().getTime()));
+        //calendar.add(Calendar.MINUTE,expiryTimeInMinutes);
+        new Date(calendar.getTime().getTime());
+        User user = userRepository.findByEmail(email);
+        if (user.getRememberToken().equals(token)) {
+            user.setEmailVerifiedAt(new Date());
+            user.setStatus(User.Status.ACTIVATE);
+            userRepository.save(user);
+        }
     }
 }

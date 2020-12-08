@@ -23,7 +23,7 @@
                    aria-haspopup="true" aria-expanded="false">
                     <img src="img/avatars/avatar.jpg" class="img-avatar"
                          alt="User Email">
-                    <span class="hidden-md-down" th:text="${session.containsKey('userFullName')}"></span>
+                    <span class="hidden-md-down" th:text="${session.currentUser.username}"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-xs-center">

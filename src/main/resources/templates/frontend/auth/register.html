@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" th:href="@{assets/css/style.css}">
-    <link rel="stylesheet" th:href="@{assets/css/font/font.css}">
-    <link rel="stylesheet" th:href="@{assets/panel/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/font/font.css}">
+    <link rel="stylesheet" th:href="@{/assets/panel/css/style.css}">
     <title>ثبت‌نام</title>
 </head>
 <body>
 <main>
     <div class="account">
 
-        <form th:object="${user}" class="form" method="POST" th:action="@{/doRegister}">
-            <a class="account-logo" href="http://webamooz.test">
-            <img src="/img/weblogo.png" alt="">
+        <form th:object="${user}" class="form" method="post" th:action="@{/register/doRegister}">
+            <a class="account-logo" href="">
+            <img src="/assets/img/weblogo.png" alt="">
         </a>
             <div class="form-content form-account">
                 <input type="text" class="txt " placeholder="نام و نام خانوادگی *"
-                       th:field="*{fullName}" required autocomplete="name" autofocus>
+                       th:field="*{fullName}" required autocomplete="fullName" autofocus>
                 <input id="email" type="email" class="txt txt-l "
                        placeholder="ایمیل *"
                        th:field="*{email}" value="" required autocomplete="email">

@@ -2,13 +2,14 @@ package com.rezahdrm.cms.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 public class User extends HistoricalColumn {
     private String name;
     private String email;
-    private Timestamp emailVerifiedAt;
+    private Date emailVerifiedAt;
     private String password;
     private Status status;
     private Long PhotoId;
@@ -17,6 +18,10 @@ public class User extends HistoricalColumn {
     private List<Post> posts;
     private List<Long> rolesId;
     private List<Role> roles;
+
+    /*public User() {
+        this.status = Status.DEACTIVATE;
+    }*/
 
     public String getName() {
         return name;
@@ -34,11 +39,11 @@ public class User extends HistoricalColumn {
         this.email = email;
     }
 
-    public Timestamp getEmailVerifiedAt() {
+    public Date getEmailVerifiedAt() {
         return emailVerifiedAt;
     }
 
-    public void setEmailVerifiedAt(Timestamp emailVerifiedAt) {
+    public void setEmailVerifiedAt(Date emailVerifiedAt) {
         this.emailVerifiedAt = emailVerifiedAt;
     }
 
@@ -95,7 +100,7 @@ public class User extends HistoricalColumn {
         this.posts = posts;
     }
 
-    enum Status {
+    public enum Status {
         ACTIVATE, DEACTIVATE, BLOCK
     }
 

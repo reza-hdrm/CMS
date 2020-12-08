@@ -1,8 +1,8 @@
-<p th:replace="~{admin/layout/master::layout(~{::content},~{::title})}" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/layout/master::layout(~{::content},~{::title})}" xmlns:th="http://www.thymeleaf.org">
     <title>لیست کاربران</title>
     <content>
         <div th:replace="admin/layout/message::message"></div>
-        <h3 class="p-b-2">لیست مطالب</h3>
+        <h3 class="p-b-2">لیست کاربران</h3>
         <table class="table table-hover bg-content">
             <thead>
             <tr>
@@ -39,4 +39,4 @@
              style="text-align: center"></div>
         <!--TODO pagination-->
     </content>
-</p>
+</div>

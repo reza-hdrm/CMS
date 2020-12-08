@@ -9,19 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-
+@Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
-    @Transactional
     @Query(value = "update User set deletedAt=:pDeletedAt where id=:pId")
     void setDeletedAt(@Param("pId") Long id, @Param("pDeletedAt") Date deletedAt);
 
     @Modifying
-    @Transactional
     @Query(value = "update User set deletedAt=null where id=:pId")
     void setNullDeletedAt(@Param("pId") Long id);
 
-    @Transactional
     List<User> findAllByDeletedAtIsNull();
 
     User findByEmail(String email);

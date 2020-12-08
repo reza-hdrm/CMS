@@ -2,43 +2,32 @@ package com.rezahdrm.cms.listener;
 
 import com.rezahdrm.cms.event.OnRegistrationCompleteEvent;
 import com.rezahdrm.cms.model.User;
-import com.rezahdrm.cms.service.IUserService;
+import com.rezahdrm.cms.service.Notifiable;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
+@Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
-    private final IUserService userService;
     private final MessageSource messageSource;
-    private final JavaMailSender javaMailSender;
+    private final Notifiable emailService;
 
-    public RegistrationListener(IUserService userService, MessageSource messageSource, JavaMailSender javaMailSender) {
-        this.userService = userService;
+    public RegistrationListener(MessageSource messageSource, Notifiable emailService) {
         this.messageSource = messageSource;
-        this.javaMailSender = javaMailSender;
+        this.emailService = emailService;
     }
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
-
+        this.confirmRegistration(event);
     }
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
-        String token = UUID.randomUUID().toString();
-        //userService.createVerificationToken(user,token);
-        String recipientAddress = user.getEmail();
+        String to = user.getEmail();
         String subject = "تأیید ثبت نام";
-        String confirmationUrl=event.getAppUrl()+"/regitrationConfirm.html?token"+token;
-        String message=messageSource.getMessage("message.regSucc",null,event.getLocale());
-
-        SimpleMailMessage email=new SimpleMailMessage();
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText(message + "\r\n" + "http://localhost:8080" + confirmationUrl);
-        javaMailSender.send(email);
+        String confirmationUrl = event.getAppUrl() + "/registrationConfirm?token" + user.getRememberToken();
+        String text = "<a href='http://127.0.0.1:8080/register/registrationConfirm?email="+to+"&token="+user.getRememberToken()+"'></a>";
+        emailService.send(to, subject, text);
     }
 }

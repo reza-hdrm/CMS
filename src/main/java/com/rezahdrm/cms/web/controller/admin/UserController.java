@@ -22,9 +22,9 @@ public class UserController {
     }
 
     @GetMapping
-    public String index(ModelMap modelMap){
-        modelMap.addAttribute("users",userService.findAll()).
-                addAttribute("persianCalendar",persianCalendar);
+    public String index(ModelMap modelMap) {
+        modelMap.addAttribute("users", userService.findAll()).
+                addAttribute("persianCalendar", persianCalendar);
         return "admin/user/index";
     }
 }

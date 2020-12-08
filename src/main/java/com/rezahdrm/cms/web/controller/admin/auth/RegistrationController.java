@@ -8,17 +8,14 @@ import com.rezahdrm.cms.service.UserService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("register")
 public class RegistrationController {
     UserService userService;
     ApplicationEventPublisher eventPublisher;
@@ -34,9 +31,9 @@ public class RegistrationController {
         return "/frontend/auth/register";
     }
 
-    @PostMapping("/doRegister")
-    public ModelAndView register(
-            @ModelAttribute @Valid UserDTO userDTO,
+    @PostMapping("doRegister")
+    public ModelAndView doRegister(
+            @ModelAttribute("user") @Valid UserDTO userDTO,
             ModelAndView modelAndView,
             HttpServletRequest httpServletRequest){
         //Password: aaAa1!
@@ -47,10 +44,17 @@ public class RegistrationController {
         } catch (UserAlreadyExistException uaeEx) {
             modelAndView.addObject("message", "An account for that email already exists.");
             return modelAndView;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //TODO perfect Message
 
         return new ModelAndView("/frontend/auth/login","user",userDTO);
     }
 
+    @GetMapping("registrationConfirm")
+    public String registrationConfirm(@RequestParam String email,@RequestParam String token){
+        userService.registrationConfirm(email,token);
+        return "redirect:/login";
+    }
 }

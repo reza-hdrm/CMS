@@ -31,7 +31,7 @@ public class UserDTO {
         this.email = email;
     }
 
-    @NotBlank
+    //@NotBlank
     public String getMobile() {
         return mobile;
     }
@@ -41,7 +41,7 @@ public class UserDTO {
     }
 
     @NotBlank
-    @Password
+    //@Password
     public String getPassword() {
         return password;
     }
@@ -57,5 +57,16 @@ public class UserDTO {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                '}';
     }
 }

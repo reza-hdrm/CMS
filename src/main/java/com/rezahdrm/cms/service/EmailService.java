@@ -14,11 +14,12 @@ import java.util.concurrent.Executors;
 
 @Service
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class EmailService {
+public class EmailService implements Notifiable {
 
     @Autowired
     JavaMailSender javaMailSender;
 
+    @Override
     public void send(String to, String subject, String text) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);

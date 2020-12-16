@@ -13,6 +13,7 @@
 <main>
     <div class="account">
         <form th:action="@{/login}" class="form" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <a class="account-logo" href="http://webamooz.test">
                 <img src="http://webamooz.test/img/weblogo.png" alt="">
             </a>

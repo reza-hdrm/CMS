@@ -2,7 +2,6 @@ package com.rezahdrm.cms.web.controller.admin;
 
 import com.ibm.icu.text.DateFormat;
 import com.rezahdrm.cms.service.UserService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -3,7 +3,6 @@ package com.rezahdrm.cms.service;
 import com.rezahdrm.cms.model.Role;
 import com.rezahdrm.cms.model.User;
 import com.rezahdrm.cms.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,12 +33,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                true,
-                true,
-                true,
-                true,
-                grantedAuthorities);
+                user.getEmail(), user.getPassword(), grantedAuthorities);
     }
 }

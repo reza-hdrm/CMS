@@ -14,9 +14,10 @@
     <div class="account">
 
         <form th:object="${user}" class="form" method="post" th:action="@{/register/doRegister}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <a class="account-logo" href="">
-            <img src="/assets/img/weblogo.png" alt="">
-        </a>
+                <img src="/assets/img/weblogo.png" alt="">
+            </a>
             <div class="form-content form-account">
                 <input type="text" class="txt " placeholder="نام و نام خانوادگی *"
                        th:field="*{fullName}" required autocomplete="fullName" autofocus>

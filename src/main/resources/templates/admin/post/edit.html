@@ -10,6 +10,7 @@
             <div class="col-md-9">
                 <form th:object="${post}" method="POST" th:action="@{/admin/post/update}" accept-charset="UTF-8"
                       enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <input type="hidden" th:value="${post.id}" name="id">
                     <input type="hidden" th:value="${post.photoId}" name="photoId">
                     <div class="form-group">

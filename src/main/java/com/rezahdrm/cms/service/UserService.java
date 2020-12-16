@@ -50,7 +50,7 @@ public class UserService implements IUserService {
     public void registrationConfirm(String email, String token) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Timestamp(calendar.getTime().getTime()));
-        //calendar.add(Calendar.MINUTE,expiryTimeInMinutes);
+        calendar.add(Calendar.MINUTE,24*60);
         new Date(calendar.getTime().getTime());
         User user = userRepository.findByEmail(email);
         if (user.getRememberToken().equals(token)) {
